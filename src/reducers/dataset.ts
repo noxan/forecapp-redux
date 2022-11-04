@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { parse } from "papaparse";
 // import type { PayloadAction } from "@reduxjs/toolkit";
 
 export const datasetSlice = createSlice({
@@ -26,16 +27,18 @@ export const datasetSlice = createSlice({
 
 export const loadDataset = createAsyncThunk<Object, string>(
   "dataset/loadDataset",
-  async (url, thunkAPI) => {
-    console.log(url);
-    // const response = await client.get("/fakeApi/posts");
-    // return response.data;
-    function wait(milliseconds: number) {
-      return new Promise((resolve) => setTimeout(resolve, milliseconds));
-    }
-    await wait(3000);
-    return [{ hi: "world" }];
-  }
+  async (url, thunkAPI) =>
+    await new Promise((resolve, reject) => {
+      parse(url, {
+        download: true,
+        complete(results, file) {
+          resolve(results.data);
+        },
+        error(err, file) {
+          reject(err);
+        },
+      });
+    })
 );
 
 // export const { loadDataset } = datasetSlice.actions;
