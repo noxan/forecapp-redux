@@ -31,6 +31,7 @@ export const loadDataset = createAsyncThunk<Object, string>(
     await new Promise((resolve, reject) => {
       parse(url, {
         download: true,
+        header: true,
         complete(results, file) {
           resolve(results.data);
         },
