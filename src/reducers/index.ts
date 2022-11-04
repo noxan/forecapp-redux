@@ -1,10 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const datasetSlice = createSlice({
-  name: "dataset",
-  initialState: {},
-  reducers: {},
-});
+import dataset from "./dataset";
+
 export const configurationSlice = createSlice({
   name: "configuration",
   initialState: {},
@@ -12,7 +9,7 @@ export const configurationSlice = createSlice({
 });
 
 const reducers = {
-  dataset: datasetSlice.reducer,
+  dataset,
   configuration: configurationSlice.reducer,
 };
 
